@@ -1,27 +1,25 @@
 #import <UIKit/UIKit.h>
-#import "SettingsKeys.h"
-#import <notify.h>
 
-static BOOL homescreenEnabled;
-static BOOL LSandNCEnabled;
-static BOOL notificationsEnabled;
-static BOOL passcodeEnabled;
+static BOOL homescreenEnabled = YES;
+static BOOL LSandNCEnabled = YES;
+static BOOL notificationsEnabled = NO;
+static BOOL passcodeEnabled = YES;
 
-static void loadPreferences() {
-    NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:kPrefPath];
+// static void loadPreferences() {
+//     NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:kPrefPath];
 
-    NSNumber *current = prefs[kHomescreen];
-    homescreenEnabled = current ? [current boolValue] : YES;
+//     NSNumber *current = prefs[kHomescreen];
+//     homescreenEnabled = current ? [current boolValue] : YES;
 
-    current = prefs[kLockscreen];
-    LSandNCEnabled = current ? [current boolValue] : YES;
+//     current = prefs[kLockscreen];
+//     LSandNCEnabled = current ? [current boolValue] : YES;
 
-    current = prefs[kNotifications];
-    notificationsEnabled = current ? [current boolValue] : YES;
+//     current = prefs[kNotifications];
+//     notificationsEnabled = current ? [current boolValue] : YES;
 
-    current = prefs[kPasscode];
-    passcodeEnabled = current ? [current boolValue] : YES;
-}
+//     current = prefs[kPasscode];
+//     passcodeEnabled = current ? [current boolValue] : YES;
+// }
 
 
 @interface SpringBoard : NSObject
@@ -272,16 +270,16 @@ static void addGesture(id self, UIView *target) {
 
 
 %ctor {
-    loadPreferences();
+    //loadPreferences();
 
-    int _;
-    notify_register_dispatch(kSettingsChanged,
-        &_,
-        dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0l),
-        ^(int _) {
-            loadPreferences();
-        }
-    );
+    // int _;
+    // notify_register_dispatch(kSettingsChanged,
+    //     &_,
+    //     dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0l),
+    //     ^(int _) {
+    //         loadPreferences();
+    //     }
+    // );
 
     Class pagedScrollViewClass = %c(SBFPagedScrollView);
     if (!pagedScrollViewClass)

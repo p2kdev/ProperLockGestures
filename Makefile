@@ -1,10 +1,9 @@
-ifdef DEBUG
-	ARCHS = arm64
-	TARGET = iphone:clang:11.2
-else
-	ARCHS = armv7s arm64 arm64e
-	TARGET = iphone:clang:9.2
-endif
+export THEOS_PACKAGE_SCHEME=rootless
+export TARGET = iphone:clang:13.7:13.0
+
+THEOS_DEVICE_IP = 192.168.86.37
+
+PACKAGE_VERSION=$(THEOS_PACKAGE_BASE_VERSION)
 
 include $(THEOS)/makefiles/common.mk
 
@@ -15,7 +14,4 @@ $(TWEAK_NAME)_CFLAGS = -fobjc-arc
 include $(THEOS_MAKE_PATH)/tweak.mk
 
 after-install::
-	install.exec "killall -9 SpringBoard"
-
-SUBPROJECTS += preferences
-include $(THEOS_MAKE_PATH)/aggregate.mk
+	install.exec "sbreload"
